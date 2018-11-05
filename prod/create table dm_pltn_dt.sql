@@ -12,3 +12,5 @@ dob date,
 ride_years int,
 id int
 );
+
+-- then import data from csv file
