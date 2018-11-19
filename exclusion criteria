@@ -1,0 +1,10 @@
+-- Exclusion criteria:
+1. Exclude rider_id from dataset due to inconsistency?
+OR
+Exclude id's where rider_id is null?
+
+2.
+
+
+-- DQ issues
+1.

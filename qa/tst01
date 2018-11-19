@@ -1,0 +1,20 @@
+SELECT YEAR, count(*)
+FROM `b_pltn_dt`
+WHERE FUNDS_RAISED IS NULL
+GROUP BY `YEAR`
+;
+
+SELECT DISTINCT id, YEAR, RIDE_YEARS, COUNT(`YEAR`)
+FROM `b_pltn_dt`
+WHERE id IS NOT NULL
+GROUP BY id, YEAR, RIDE_YEARS
+ORDER BY id, YEAR DESC
+-- ride_years not used until 2011?
+;
+
+SELECT t1.id, t1.dob, t2.DOB
+FROM `b_pltn_dt` AS t1
+INNER JOIN `b_pltn_dt` AS t2
+ON t1.id=t2.id
+WHERE t1.DOB != t2.DOB
+;
