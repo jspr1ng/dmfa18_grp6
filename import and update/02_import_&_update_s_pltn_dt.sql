@@ -1,8 +1,9 @@
--- import & update code: silver level
+-- import & update code: SILVER level
 
--- 1. load s_pltn_dt
+-- 1. create and load s_pltn_dt
 CREATE TABLE s_pltn_dt
   (YEAR varchar, rider_id varchar, living_proof varchar, ride_distance smallint, funds_raised decimal(100,4), gender varchar, dob varchar, id int);
+-- load from b_pltn_dt
 INSERT INTO s_pltn_dt
   SELECT YEAR, rider_id, living_proof, ride_distance, funds_raised, gender, dob, id
   FROM `pltn_dt`;
@@ -41,8 +42,8 @@ update s_pltn_dt
   set ID = null
   where id = ' '
 ;
-
--- 3. duplicate detection
+/*
+-- DEV - 3. duplicate detection
 delete from s_pltn_dt
   where id in (
     select t1.id
@@ -52,3 +53,4 @@ delete from s_pltn_dt
     and t1.year = t2.year
 
   )
+*/

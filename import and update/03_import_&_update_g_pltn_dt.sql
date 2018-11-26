@@ -1,6 +1,6 @@
--- import & update code: gold level
+-- import & update code: GOLD level
 
--- 1. load GOLD from SILVER for values:
+-- 1. create and load GOLD from SILVER for values:
   -- have more than one id (multiple years of ridership)
   -- funds_raised is not null, and greater than $0.00
 CREATE TABLE g_pltn_dt
