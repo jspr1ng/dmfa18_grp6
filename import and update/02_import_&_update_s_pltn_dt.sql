@@ -42,15 +42,3 @@ update s_pltn_dt
   set ID = null
   where id = ' '
 ;
-/*
--- DEV - 3. duplicate detection
-delete from s_pltn_dt
-  where id in (
-    select t1.id
-    from s_pltn_dt as t1
-    inner join s_pltn_dt as t2
-    on t1.id = t2.id
-    and t1.year = t2.year
-
-  )
-*/
