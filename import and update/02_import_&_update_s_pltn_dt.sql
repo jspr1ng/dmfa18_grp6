@@ -9,12 +9,6 @@ INSERT INTO s_pltn_dt
   SELECT YEAR, living_proof, ride_distance, funds_raised, gender, dob, id
   FROM `b_pltn_dt`; --53,535
 
-
--- load from b_pltn_dt
-INSERT INTO s_pltn_dt
-  SELECT YEAR, living_proof, ride_distance, funds_raised, gender, dob, id
-  FROM `b_pltn_dt`; --53,535
-
 -- 2. remove " " values
 update s_pltn_dt
 set YEAR = NULL
