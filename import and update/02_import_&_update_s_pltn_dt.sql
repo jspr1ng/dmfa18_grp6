@@ -2,33 +2,35 @@
 
 -- 1. create and load s_pltn_dt
 CREATE TABLE s_pltn_dt
-  (YEAR varchar, rider_id varchar, living_proof varchar, ride_distance smallint, funds_raised decimal, gender varchar, dob varchar, id int);
+  (YEAR varchar(255), living_proof varchar(255), ride_distance smallint, funds_raised decimal, gender varchar(255), dob varchar(255), id varchar(255));
+
 -- load from b_pltn_dt
 INSERT INTO s_pltn_dt
-  SELECT YEAR, rider_id, living_proof, ride_distance, funds_raised, gender, dob, id
-  FROM `b_pltn_dt`; --49,023
+  SELECT YEAR, living_proof, ride_distance, funds_raised, gender, dob, id
+  FROM `b_pltn_dt`; --53,535
+
+
+-- load from b_pltn_dt
+INSERT INTO s_pltn_dt
+  SELECT YEAR, living_proof, ride_distance, funds_raised, gender, dob, id
+  FROM `b_pltn_dt`; --53,535
 
 -- 2. remove " " values
 update s_pltn_dt
-  set YEAR = NULL
-  where year = ' '
+set YEAR = NULL
+where year = ' '
 ;
 update s_pltn_dt
-  set RIDER_ID = null
-  where rider_id = ' '
+set LIVING_PROOF = NULL
+where living_proof = ' '
 ;
 update s_pltn_dt
-  set LIVING_PROOF = NULL
-  where living_proof = ' '
+set GENDER = NULL
+WHERE gender = ' '
 ;
 update s_pltn_dt
-set GENDER
-;
-update s_pltn_dt
-set DOB
-;
-update s_pltn_dt
-set RIDE_YEARS
+set DOB = NULL
+WHERE dob = ' '
 ;
 /*
 -- 3. remove duplicates

@@ -3,30 +3,20 @@
 -- 1. create and load GOLD from SILVER for values:
   -- have more than one id (multiple years of ridership)
   -- funds_raised is not null, and greater than $0.00
-CREATE TABLE g_pltn_dt
-  (YEAR, rider_id, living_proof, ride_distance, funds_raised, gender, dob, id);
+CREATE TABLE g_pltn_dt (YEAR varchar(255), living_proof varchar(255), ride_distance SMALLINT, funds_raised decimal, gender varchar(255), dob_year varchar(255), id varchar(255));
 INSERT INTO g_pltn_dt
-  SELECT YEAR, rider_id, living_proof, ride_distance, funds_raised, gender, dob, id
+  SELECT YEAR, living_proof, ride_distance, funds_raised, gender, right(dob,4), id
   FROM `s_pltn_dt`
   where id is not NULL
   and   (funds_raised > 0 and funds_raised is not null)
-  having count(id)>1
-  ;
+  GROUP BY YEAR, living_proof, ride_distance, funds_raised, gender, dob, id
+  ; -- 52,734 rows
 
 -- 2. add column for quantile
 -- populate later once decision has been made on quantile ranges
 alter table g_pltn_dt
-  add column "quantile" int
+  add column quantile smallint
 ;
 
--- 3. add column for dob year, drop column DOB
-alter table g_pltn_dt
-  add column "y_dob" string
-;
-update g_pltn_dt
-  set y_dob = right(dob,4)
-  where dob is not null
-;
-alter table g_pltn_dt
-  drop column dob
-;
+SELECT * FROM g_pltn_dt
+WHERE dob_year IS NOT null
