@@ -26,19 +26,31 @@ update s_pltn_dt
 set DOB = NULL
 WHERE dob = ' '
 ;
-/*
--- 3. remove duplicates
---delete t1
-SELECT t1.*
-  FROM `s_pltn_dt` AS t1
-  INNER JOIN `s_pltn_dt` AS t2
-ON t1.id = t2.id
-AND t1.DOB = t2.DOB
-AND t1.FUNDS_RAISED = t2.FUNDS_RAISED
-AND t1.GENDER = t2.GENDER
-AND t1.LIVING_PROOF = t2.LIVING_PROOF
-AND t1.RIDE_DISTANCE = t2.RIDE_DISTANCE
---AND t1.RIDE_YEARS = t2.RIDE_YEARS
---AND t1.RIDER_ID = t2.RIDER_ID
-AND t1.`YEAR` = t2.`YEAR`
-;*/
+
+-- 3. remove rows with dob/gender inconsistencies
+delete from s_pltn_dt
+  where id  in
+  (
+  select p1.id  FROM `s_pltn_dt` AS p1
+  INNER JOIN `s_pltn_dt` AS p2
+  ON p1.id = p2.`id`
+  WHERE
+  (
+    p1.dob <> p2.`dob`
+    AND
+    p1.`gender` = p2.`gender`
+  )
+  OR
+  (
+    p1.dob = p2.`dob`
+    AND
+    p1.`gender` <> p2.`gender`
+  )
+  OR
+  (
+    p1.dob <> p2.dob
+    AND
+    p1.gender <> p2.gender
+  )
+  )
+;
