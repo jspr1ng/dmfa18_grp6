@@ -34,23 +34,8 @@ delete from s_pltn_dt
   select p1.id  FROM `s_pltn_dt` AS p1
   INNER JOIN `s_pltn_dt` AS p2
   ON p1.id = p2.`id`
-  WHERE
-  (
-    p1.dob <> p2.`dob`
-    AND
-    p1.`gender` = p2.`gender`
-  )
-  OR
-  (
-    p1.dob = p2.`dob`
-    AND
-    p1.`gender` <> p2.`gender`
-  )
-  OR
-  (
-    p1.dob <> p2.dob
-    AND
-    p1.gender <> p2.gender
-  )
+  WHERE p1.dob <> p2.`dob`
+  OR	p1.`gender` <> p2.`gender`
+  OR 	(p1.gender <> p2.gender AND p1.dob <> p2.dob)
   )
 ;
