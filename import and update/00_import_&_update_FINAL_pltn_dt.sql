@@ -1,6 +1,3 @@
--- import & update final_pltn_dt
--- js 2018-12-01
-
 -- 1. create table drop table final_pltn_dt
 CREATE TABLE final_pltn_dt
 	(YEAR varchar(255), living_proof varchar(255), ride_distance smallint, funds_raised decimal, gender varchar(255), dob varchar(255), id varchar(255), return_rider varchar(255), bin_funds_raised varchar(255));
