@@ -1,0 +1,60 @@
+#load libraries
+library(lubridate)
+library(stringr)
+
+# Read CSV into R
+pltn <- read.csv(file.choose(), header=TRUE, sep=",")
+
+#create new dataset for "Real Riders" who have raised more than $1,000
+pltn_rr <- pltn %>% filter(BIN_FUNDS_RAISED != "< $1,000")
+
+# convert date format of dob
+pltn_rr$dob_adj<- as.Date(pltn_rr$DOB,format= "%m/%d/%Y")
+
+#cast dob as year
+pltn_rr$dob_year<- year(pltn_rr$dob_adj)
+
+#calculate age (ride year - dob_year)
+pltn_rr$age <- with(pltn_rr, YEAR-dob_year)
+
+#create new dataset with only complete cases
+pltn_rr <- pltn_rr[which(complete.cases(pltn_rr)),]
+
+#create new column 'sex'
+pltn_rr$sex <- with(pltn_rr, ifelse(GENDER=="Female",1,0))
+
+#remove comma from funds_raised, cast as numeric new column 'funds'
+pltn_rr$funds<-as.numeric(str_remove(pltn_rr$FUNDS_RAISED,","))
+
+#create new column 'return'
+pltn_rr$return<-with(pltn_rr, ifelse(RETURN_RIDER=="Y",1,0))
+
+#review column types
+str(pltn_rr[, c("FUNDS_RAISED","RIDE_DISTANCE","age", "sex","funds")])
+
+########################
+## model01:funds_raised
+## dependent variable = funds, independent variables = ride_distance, age, sex, return
+
+#review correlation
+#cor(pltn_rr[, c("funds","RIDE_DISTANCE","age", "sex", "return")])
+
+#build funds_raised model (without intercept)
+fund_model <- lm(funds~-1+RIDE_DISTANCE+age+sex+return, pltn_rr)
+summary(fund_model)
+
+########################
+## model02: return_rider
+## dependent variable = return, independent variables = funds, ride_distance, age, sex
+
+#build funds_raised model (without intercept)
+rr_model <- lm(return~-1+RIDE_DISTANCE+age+sex+funds, pltn_rr)
+summary(rr_model)
+
+########################
+## model03: return_rider
+## dependent variable = ride_distance, independent variables = funds,age, sex, return
+
+#build funds_raised model (without intercept)
+rd_model <- lm(RIDE_DISTANCE~-1+age+sex+funds+return, pltn_rr)
+summary(rd_model)
